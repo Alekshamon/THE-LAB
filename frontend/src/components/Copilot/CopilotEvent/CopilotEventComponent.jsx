@@ -32,7 +32,6 @@ export default function CopilotEventComponent() {
       })
       .catch((err) => console.info(err));
   }, [selectTab]);
-  console.info("formData", formData);
   return (
     <div className="flex flex-col items-center w-full py-5 text-white  font-secondary-font bg-[#281f31] lg:h-auto rounded-[20px]">
       <h1 className=" text-2xl">Vos événements inscrits :</h1>

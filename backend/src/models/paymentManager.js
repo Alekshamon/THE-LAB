@@ -8,6 +8,10 @@ class PaymentManager extends AbstractManager {
     super({ table: "payment" });
   }
 
+  async getPrivilegeById(id) {
+    return this.database.query(`SELECT * FROM privilege WHERE id = ?`, [id]);
+  }
+
   async readAll() {
     return this.database.query(`select * from ${this.table}`);
   }

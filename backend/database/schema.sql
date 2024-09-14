@@ -12,7 +12,6 @@ DROP TABLE IF EXISTS product;
 DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS missions;
 DROP TABLE IF EXISTS user_missions;
-
 CREATE TABLE user (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     lastname VARCHAR(80) NOT NULL,
@@ -25,7 +24,6 @@ CREATE TABLE user (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
-
 CREATE TABLE event (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     city VARCHAR(80) NOT NULL,
@@ -36,7 +34,6 @@ CREATE TABLE event (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
-
 CREATE TABLE stock_event (
     id INT primary key NOT NULL AUTO_INCREMENT,
     event_id INT NOT NULL,
@@ -46,7 +43,6 @@ CREATE TABLE stock_event (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
-
 CREATE TABLE discount (
     id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     percent_value INT NOT NULL,
@@ -57,7 +53,6 @@ CREATE TABLE discount (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
-
 CREATE TABLE payment (
     bill_number INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     amount DECIMAL(10, 2) NOT NULL,
@@ -69,8 +64,7 @@ CREATE TABLE payment (
     CONSTRAINT fk_payment_user_id FOREIGN KEY (user_id) REFERENCES user(id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) AUTO_INCREMENT=1000;
-
+) AUTO_INCREMENT = 1000;
 CREATE TABLE user_discount (
     id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     user_id INT NOT NULL,
@@ -80,7 +74,6 @@ CREATE TABLE user_discount (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
-
 CREATE TABLE user_info (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     avatar VARCHAR(250),
@@ -88,7 +81,7 @@ CREATE TABLE user_info (
     poids INT NOT NULL,
     pointure INT NOT NULL,
     pied_fort ENUM('gauche', 'droit') NOT NULL,
-    poste ENUM('gardien','défenseur','milieu','attaquant') NOT NULL,
+    poste ENUM('gardien', 'défenseur', 'milieu', 'attaquant') NOT NULL,
     sexe ENUM('masculin', 'féminin') NOT NULL,
     numero_de_telephone VARCHAR(80),
     adresse_postale TEXT,
@@ -98,7 +91,6 @@ CREATE TABLE user_info (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
-
 CREATE TABLE note (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     note_physique INT,
@@ -114,42 +106,34 @@ CREATE TABLE note (
     note_pied_faible INT,
     note_gen INT,
     user_id INT NOT NULL,
-    CONSTRAINT fk_note_user_id
-    FOREIGN KEY (user_id) REFERENCES user(id),
+    CONSTRAINT fk_note_user_id FOREIGN KEY (user_id) REFERENCES user(id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
-
 CREATE TABLE score_card (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     photo_user VARCHAR(250),
     note_id INT NOT NULL,
-    CONSTRAINT fk_score_card_note_id
-    FOREIGN KEY (note_id) REFERENCES note(id),
+    CONSTRAINT fk_score_card_note_id FOREIGN KEY (note_id) REFERENCES note(id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
-
 CREATE TABLE product (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR (80) NOT NULL,
     img VARCHAR(255) NOT NULL,
     color VARCHAR(80) NOT NULL
 );
-
 CREATE TABLE privilege (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(80) NOT NULL,
-    price DECIMAL(10,2) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
     product_id INT,
-    CONSTRAINT fk_privilege_product_id
-    FOREIGN KEY (product_id) REFERENCES product(id),
-    user_id INT NOT NULL,
-    CONSTRAINT fk_privilege_user_id
-    FOREIGN KEY (user_id) REFERENCES user(id)
+    stripe_price_id VARCHAR(255);
+CONSTRAINT fk_privilege_product_id FOREIGN KEY (product_id) REFERENCES product(id),
+user_id INT NOT NULL,
+CONSTRAINT fk_privilege_user_id FOREIGN KEY (user_id) REFERENCES user(id)
 );
-
-
 CREATE TABLE orders (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     payment_bill_number INT NOT NULL,
@@ -159,16 +143,20 @@ CREATE TABLE orders (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
-
 CREATE TABLE missions (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     mission VARCHAR(255) NOT NULL,
     difficulty INT NOT NULL CHECK (difficulty IN (1, 2, 3)),
-    poste ENUM('attaquant', 'milieu', 'défenseur', 'gardien', 'all') NOT NULL,
+    poste ENUM(
+        'attaquant',
+        'milieu',
+        'défenseur',
+        'gardien',
+        'all'
+    ) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
-
 CREATE TABLE user_missions (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     status ENUM('Non commencé', 'En cours', 'Terminé') NOT NULL DEFAULT 'Non commencé',

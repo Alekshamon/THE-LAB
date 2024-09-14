@@ -23,16 +23,6 @@ export default function AddEventModal({ isOpen, onRequestClose }) {
     success: false,
   });
 
-  // Fonction pour afficher la notification et la cacher après 2 secondes
-  const showNotification = (message, success) => {
-    setNotification({ message, success });
-
-    // Masquer la notification après 2 secondes
-    setTimeout(() => {
-      setNotification({ message: "", success: false });
-    }, 2000);
-  };
-
   useEffect(() => {
     Modal.setAppElement("#root");
     // Récupération de la liste des événements depuis l'API
@@ -151,6 +141,16 @@ export default function AddEventModal({ isOpen, onRequestClose }) {
   const handleCharacteristicChange = (e) => {
     // Mise à jour de la caractéristique sélectionnée
     setSelectedCharacteristic(e.target.value);
+  };
+
+  // Fonction pour afficher la notification et la cacher après 2 secondes
+  const showNotification = (message, success) => {
+    setNotification({ message, success });
+
+    // Masquer la notification après 2 secondes
+    setTimeout(() => {
+      setNotification({ message: "", success: false });
+    }, 2000);
   };
 
   return (

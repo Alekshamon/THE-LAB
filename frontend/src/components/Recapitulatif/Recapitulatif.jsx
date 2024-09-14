@@ -1,14 +1,40 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 // eslint-disable-next-line react/prop-types
+
 export default function Recapitulatif({ selectedEvent, selectedFormula }) {
-  console.info("selectedEvent", selectedEvent);
-  console.info("selectedFormula", selectedFormula);
-  const { city, address, date } = selectedEvent;
-  const { description, price, title } = selectedFormula;
-  //   const handlePromoCode = (e) => {
-  //     console.info("promo code");
-  //   };
+  const { city, address, date } = selectedEvent || {};
+  const { price, title } = selectedFormula || {};
+  const handleCheckout = async () => {
+    try {
+      // Utilisez l'URL de l'environnement pour faire l'appel API
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/create-checkout-session`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ price: selectedFormula.id }),
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const { url } = await response.json();
+      if (url) {
+        window.location.href = url;
+      } else {
+        throw new Error("Invalid response from server");
+      }
+    } catch (error) {
+      console.error(
+        "Erreur lors de la création de la session de paiement:",
+        error
+      );
+    }
+  };
 
   return (
     <>
@@ -34,13 +60,12 @@ export default function Recapitulatif({ selectedEvent, selectedFormula }) {
           </button>
         </div>
       </div>
-      <form
-        action="/create-checkout-session"
-        method="POST"
+      <button
+        onClick={handleCheckout}
         className="bg-red-600 text-white rounded px-2 mb-4"
       >
-        <button type="submit">Passer Au Paiement</button>
-      </form>
+        Passer Au Paiement
+      </button>
     </>
   );
 }
