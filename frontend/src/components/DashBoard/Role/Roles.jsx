@@ -71,7 +71,6 @@ export default function MainContentUser() {
         value.toString().toLowerCase().includes(searchTerm.toLowerCase())
     )
   );
-  console.info("filteredUsers", filteredUsers);
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);

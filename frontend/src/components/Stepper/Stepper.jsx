@@ -1,15 +1,15 @@
 /* eslint-disable react/no-array-index-key */
 import { useState } from "react";
 import { TiTick } from "react-icons/ti";
-import { formulas } from "../../data/constants/index";
+//import { formulas } from "../../data/constants/index";
 import Dropdown from "../Dropdown/Dropdown";
-import Formules from "../Formules/Formules";
+// import Formules from "../Formules/Formules";
 import UserInformations from "../UserInformations/UserInformations";
 import "./stepper.css";
 import Recapitulatif from "../Recapitulatif/Recapitulatif";
 
 export default function Stepper() {
-  const steps = ["Evenement", "Formule", "Information", "Paiement"];
+  const steps = ["Evenement" /* "Formule"*/, , "Information", "Paiement"];
   const [currentStep, setcurrentStep] = useState(1);
   const [complete, setcomplete] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState({
@@ -18,7 +18,7 @@ export default function Stepper() {
     city: "",
     date: "",
   });
-  const [selectedFormula, setSelectedFormula] = useState(null);
+  // const [selectedFormula, setSelectedFormula] = useState(null);
   const [isFormValid, setIsFormValid] = useState(false);
   const [formUserInfos, setFormUserInfos] = useState({
     taille: "",
@@ -32,8 +32,6 @@ export default function Stepper() {
     ville: "",
     img: "",
   });
-  console.info("isFormValid from Stepper", isFormValid);
-  console.info("formUserInfos from Stepper", formUserInfos);
   return (
     <>
       <div className="flex justify-between">
@@ -61,11 +59,11 @@ export default function Stepper() {
         <button
           className="mt-4 text-md font-bold text-center text-secondary bg-primary focus:outline-none 
             bg-gradient-to-r from-[#4CACFF] via-[#A070EF] to-[#8E78DA] rounded-xl hover:bg-gradient-to-r hover:from-[#4CACFF] hover:via-[#4CACFF] hover:to-[#4CACFF] ease-in font-primary-font p-2"
-          // disabled={
-          //   (currentStep === 1 && !selectedEvent) ||
-          //   (currentStep === 2 && !selectedFormula) ||
-          //   (currentStep === 3 && !isFormValid)
-          // }
+          disabled={
+            (currentStep === 1 && !selectedEvent) ||
+            // (currentStep === 2 && !selectedFormula) ||
+            (currentStep === 3 && !isFormValid)
+          }
           onClick={() => {
             if (currentStep === steps.length) {
               setcomplete(true);
@@ -83,9 +81,9 @@ export default function Stepper() {
           setSelectedEvent={setSelectedEvent}
         />
       )}
-      {currentStep === 2 && (
+      {/* {currentStep === 2 && (
         <Formules formulas={formulas} setSelectedFormula={setSelectedFormula} />
-      )}
+      )} */}
       {currentStep === 3 && (
         <UserInformations
           formUserInfos={formUserInfos}
@@ -95,7 +93,7 @@ export default function Stepper() {
       )}
       {currentStep === 4 && (
         <Recapitulatif
-          selectedFormula={selectedFormula}
+          // selectedFormula={selectedFormula}
           selectedEvent={selectedEvent}
         />
       )}

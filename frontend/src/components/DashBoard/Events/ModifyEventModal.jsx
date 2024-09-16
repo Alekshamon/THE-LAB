@@ -33,7 +33,6 @@ export default function EditEventModal({
       status: "active",
     } || {}
   );
-  console.info("eventData", eventData);
   const handleChange = (event) => {
     setFormData({
       ...formData,
@@ -44,12 +43,10 @@ export default function EditEventModal({
   const handleSubmit = (event) => {
     event.preventDefault();
     onUpdateEvent(formData);
-    console.info("formData", formData);
     setTimeout(() => {
       onRequestClose();
     }, 1000);
   };
-  console.info("formData.date", formData.date);
   return (
     <Modal
       isOpen={isOpen}

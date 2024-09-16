@@ -44,8 +44,6 @@ export default function AddProfileCopilotModal({
     }, 1000);
   };
 
-  console.info("formData", formData);
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -53,7 +51,6 @@ export default function AddProfileCopilotModal({
     Object.entries(formData).forEach(([key, value]) => {
       formDataToSend.append(key, value);
     });
-    console.info("formDataToSend", formDataToSend);
     fetch(`${import.meta.env.VITE_BACKEND_URL}/api/user/info`, {
       method: "POST",
       headers: {

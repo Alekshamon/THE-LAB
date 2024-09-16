@@ -15,11 +15,6 @@ const getDiscount = async (req, res) => {
     } else {
       const updateDiscount = await Promise.all(
         discount.map(async (discounts) => {
-          console.info(
-            "new Date(discounts.date)",
-            new Date(discounts.duree_de_validite)
-          );
-          console.info("new Date(currentDate)", new Date(currentDate));
           if (new Date(discounts.duree_de_validite) <= new Date(currentDate)) {
             await tables.discount.updateStatusDiscount(discounts.id);
           }
@@ -83,7 +78,6 @@ const updateDiscount = async (req, res) => {
 
 // const deleteDiscount = async (req, res) => {
 //   const { id } = req.params;
-//   console.info("id", id);
 //   try {
 //     await tables.discount.deleteDiscount({ discount_id: id });
 

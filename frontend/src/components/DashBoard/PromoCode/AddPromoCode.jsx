@@ -40,7 +40,6 @@ export default function AddDiscountModal({
     });
   };
 
-  console.info("formData", formData);
   const handleSubmit = (e) => {
     e.preventDefault();
     // Send a POST request to your API

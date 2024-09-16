@@ -60,14 +60,11 @@ const edit = async (req, res) => {
 
     // Récupérer l'ancienne photo de l'utilisateur
     const oldUserInfo = await tables.user_info.getUserInfoById(id);
-    // console.log("oldUserInfo", oldUserInfo);
     const oldAvatarPath = oldUserInfo[0][0].avatar;
-    console.info("oldAvatarPath", oldAvatarPath);
     let { avatar } = oldUserInfo[0];
     if (req.file) {
       avatar = req.file.path;
     }
-    // console.log("oldAvatarPath", oldAvatarPath);
     const updateFields = {
       taille,
       poids,

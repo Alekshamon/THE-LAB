@@ -3,6 +3,41 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-unused-vars */
 const tables = require("../tables");
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+
+const createCheckoutSession = async (req, res) => {
+  try {
+    const { id } = req.body;
+
+    if (!id) {
+      return res.status(400).json({ error: "Le id est requis" });
+    }
+
+    const [privilege] = await tables.privilege.read(id);
+
+    if (!privilege || !privilege.stripe_price_id) {
+      return res
+        .status(400)
+        .json({ error: "Le stripe_price_id correspondant n'a pas été trouvé" });
+    }
+
+    const session = await stripe.checkout.sessions.create({
+      line_items: [
+        {
+          price: privilege.stripe_price_id,
+          quantity: 1,
+        },
+      ],
+      mode: "payment",
+      success_url: `http://localhost:3310/success`,
+      cancel_url: `http://localhost:3310/canceled`,
+    });
+
+    res.json({ url: session.url });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 
 const getPayment = async (req, res, next) => {
   try {
@@ -76,4 +111,10 @@ const deletePayment = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-module.exports = { getPayment, addPayment, updatePayment, deletePayment };
+module.exports = {
+  createCheckoutSession,
+  getPayment,
+  addPayment,
+  updatePayment,
+  deletePayment,
+};

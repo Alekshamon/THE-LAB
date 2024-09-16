@@ -5,7 +5,6 @@ import { UserContext } from "../../../context/UserContext";
 export default function CopilotNotesComponent() {
   const [notes, setNotes] = useState([]);
   const { user } = useContext(UserContext);
-  console.info("user", user);
   useEffect(() => {
     fetch(`${import.meta.env.VITE_BACKEND_URL}/api/mynote`, {
       headers: {

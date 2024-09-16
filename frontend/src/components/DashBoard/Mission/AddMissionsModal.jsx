@@ -57,7 +57,6 @@ export default function AddMissionsModal({
     })
       .then((response) => response.json())
       .then((data) => {
-        console.info("Success:", data);
         showNotification("Mission ajoutée avec succès", true);
         // Reset the form and close the modal
         setFormData({

@@ -29,20 +29,16 @@ export default function EditProductModal({
     }, 1000);
   };
 
-  console.info("eventData", eventData);
   const handleChange = (event) => {
     const { name, value, files } = event.target;
-    console.info("files", files);
     if (name === "img") {
       if (files === null) {
         const file = `${import.meta.env.VITE_BACKEND_URL}/${formData.img}`;
-        console.info("file", file);
         setFormData((prevFormData) => ({
           ...prevFormData,
         }));
       } else {
         const file = files[0];
-        console.info("file", file);
         setFormData((prevFormData) => ({
           ...prevFormData,
           [name]: file,
@@ -54,17 +50,13 @@ export default function EditProductModal({
         [name]: value,
       }));
     }
-    console.info("formData", formData);
   };
 
   const updateProduct = (updatedProduct) => {
-    console.info("formData", formData);
-    console.info("updatedProduct", updatedProduct);
     const formDataToSend = new FormData();
     Object.entries(formData).forEach(([key, value]) => {
       formDataToSend.append(key, value);
     });
-    console.info("formDataToSend", formDataToSend);
     fetch(
       `${import.meta.env.VITE_BACKEND_URL}/api/products/${updatedProduct.id}`,
       {
@@ -98,7 +90,6 @@ export default function EditProductModal({
     }, 1000);
     updateProduct(formData);
   };
-  console.info("formData", formData);
   return (
     <Modal
       isOpen={isOpen}

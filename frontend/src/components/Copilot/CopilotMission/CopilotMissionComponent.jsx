@@ -42,7 +42,6 @@ export default function CopilotMissionComponent() {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.info("Success:", data);
         const updatedMission = missions.map((mission) =>
           mission.id === id ? { ...mission, status: newStatus } : mission
         );

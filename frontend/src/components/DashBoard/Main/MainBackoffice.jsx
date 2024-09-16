@@ -59,7 +59,6 @@ export default function MainBackoffice() {
       .then((response) => response.json())
       .then((data) => {
         const total = data.length;
-        console.info("data", data);
         setTotalInscriptions(total);
       });
 

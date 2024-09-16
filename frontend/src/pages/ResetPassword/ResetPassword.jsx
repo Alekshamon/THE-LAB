@@ -47,7 +47,6 @@ export default function ResetPassword() {
         return response.json();
       })
       .then((res) => {
-        console.info("res", res);
         setLoading(false);
         setTimeout(() => {
           navigate("/login");

@@ -74,7 +74,6 @@ export default function PromoCode() {
     indexOfFirstUser,
     indexOfLastUser
   );
-  console.info("discount", promoCode);
   return (
     <div className="flex flex-col items-center w-full lg:pt-10">
       <h1 className="text-center text-[30px] font-primary-font">

@@ -106,7 +106,6 @@ const remove = async (req, res) => {
   try {
     const productId = req.params.id;
     const [product] = await tables.product.getProductById(productId);
-    console.info(product);
     if (product[0].length === 0) {
       res.status(404).json({ message: "Product not found" });
     }

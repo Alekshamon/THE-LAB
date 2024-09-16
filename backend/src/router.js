@@ -247,6 +247,12 @@ router.get("/payment", verifyToken, paymentController.getPayment);
 // admin & superAdmin
 router.post("/payment", verifyToken, paymentController.addPayment);
 
+// Route pour Stripe - Crée une session de paiement
+router.post(
+  "/create-checkout-session",
+  paymentController.createCheckoutSession
+);
+
 // router.put("/payment/:bill_number", paymentController.updatePayment);
 // router.delete("/payment/:id", paymentController.deletePayment);
 

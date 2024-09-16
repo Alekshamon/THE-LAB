@@ -7,7 +7,6 @@ export default function Formules({ formulas, setSelectedFormula }) {
   const handleSelectFormula = (formula) => {
     setSelectedFormula(formula);
     setSelectedCard(formula.id);
-    console.info("formula", formula);
   };
 
   return (

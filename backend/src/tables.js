@@ -41,7 +41,6 @@ const managers = [
   UserInfoManager,
   missionsManager,
   userMissionsManager,
-  // Add other managers here
 ];
 
 // Create an empty object to hold data managers for different tables

@@ -58,7 +58,6 @@ export default function MainContentUser() {
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = filteredUsers?.slice(indexOfFirstUser, indexOfLastUser);
-  console.info("current", currentUsers);
   return (
     <div className="flex flex-col text-center items-center w-full lg:pt-10">
       <h1 className="text-center text-[30px] font-primary-font">
