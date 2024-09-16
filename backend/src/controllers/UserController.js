@@ -167,16 +167,13 @@ const deleteUser = async (req, res) => {
 const createPasswordResetToken = async (req, res) => {
   try {
     const { email } = req.body;
-    console.info("email", email);
     const [user] = await tables.user.getUserByEmail(email);
-    console.info("user", user);
     if (user.length) {
       const tokenResetPassword = jwt.sign(
         { payload: user[0].id },
         process.env.SECRET_KEY_JWT,
         { expiresIn: "0.5h" }
       );
-      console.info("tokenResetPassword", tokenResetPassword);
       await tables.user.sendPasswordResetEmail(tokenResetPassword, email, req);
       res.status(200).json({
         message:
@@ -193,15 +190,12 @@ const createPasswordResetToken = async (req, res) => {
 const resetPassword = async (req, res) => {
   try {
     const { token } = req.query;
-    // console.info("token", token);
     const tokenResetPassword = jwt.verify(token, process.env.SECRET_KEY_JWT);
-    console.info("tokenResetPassword", tokenResetPassword);
     const { hashedPassword } = req.body;
     const [user] = await tables.user.updateUserOnlyPassword(
       tokenResetPassword.payload,
       hashedPassword
     );
-    console.info("user", user);
     if (!user.affectedRows) {
       res.status(404).json({ error: "Token invalide ou expiré" });
     }

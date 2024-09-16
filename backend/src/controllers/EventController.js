@@ -13,7 +13,6 @@ const getAllEvents = async (req, res) => {
         return event;
       })
     );
-    console.info("events", updatedEvents);
     res.status(200).json(updatedEvents);
   } catch (error) {
     res.status(500).json({ error: error.message });

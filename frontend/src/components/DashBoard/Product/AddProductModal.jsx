@@ -42,8 +42,6 @@ export default function AddEventModal({
     }));
   };
 
-  console.info("formData", formData);
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -51,7 +49,6 @@ export default function AddEventModal({
     Object.entries(formData).forEach(([key, value]) => {
       formDataToSend.append(key, value);
     });
-    console.info("formDataToSend", formDataToSend);
     // Send a POST request to your API
     fetch(`${import.meta.env.VITE_BACKEND_URL}/api/products`, {
       method: "POST",

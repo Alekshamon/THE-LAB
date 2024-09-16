@@ -99,7 +99,6 @@ export default function MissionsDashBoard() {
     indexOfFirstMission,
     indexOfLastMission
   );
-  console.info("missions", missions);
   return (
     <div className="flex flex-col justify-center items-center w-full lg:pt-10">
       <h1 className="text-center text-[30px] font-primary-font">

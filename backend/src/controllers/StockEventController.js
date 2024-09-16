@@ -19,6 +19,7 @@ const createStockEvent = async (req, res) => {
   try {
     const event_id = req.body;
     const user_id = req.payload;
+
     const checkUserInEvent = await tables.stock_event.checkUserEvent(
       event_id.event_id,
       user_id

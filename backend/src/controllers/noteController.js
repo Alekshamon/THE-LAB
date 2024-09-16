@@ -53,10 +53,8 @@ const noteController = {
   getNoteById: async (req, res) => {
     try {
       const id = req.payload;
-      console.info("id", id);
 
       const [note] = await tables.note.read(id);
-      console.info("note", note);
       if (note.length > 0) {
         res.status(200).json(note);
       } else {
@@ -91,7 +89,6 @@ const noteController = {
       note_gen,
       user_id,
     } = req.body;
-    console.info("req.body", req.body);
     // Créer un objet pour stocker uniquement les champs à mettre à jour
     const updateFields = {};
 

@@ -22,7 +22,6 @@ export default function AddEventModal({
     img: null,
     note_id: userNotes[0].id,
   });
-  console.info("userNotes", userNotes);
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     const file = name === "img" ? files[0] : null;
@@ -41,7 +40,6 @@ export default function AddEventModal({
       setNotification({ message: "", success: false });
     }, 1000);
   };
-  console.info("formData", formData);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -50,7 +48,6 @@ export default function AddEventModal({
     Object.entries(formData).forEach(([key, value]) => {
       formDataToSend.append(key, value);
     });
-    console.info("formDataToSend", formDataToSend);
     // Send a POST request to your API
     fetch(`${import.meta.env.VITE_BACKEND_URL}/api/score_card`, {
       method: "POST",

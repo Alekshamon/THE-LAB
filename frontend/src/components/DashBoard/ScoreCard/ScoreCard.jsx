@@ -81,9 +81,6 @@ export default function AddScoreCard() {
             (note) => note.user_id === parseInt(selectedUser, 10)
           );
           setUserNotes(filteredNotes);
-          console.info("selectedUser:", selectedUser);
-          console.info("filteredNotes:", filteredNotes);
-          console.info("data:", data);
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -110,28 +107,6 @@ export default function AddScoreCard() {
     setSelectedUser(e.target.value);
   };
 
-  console.info("user", userNotes);
-  console.info("users[]", users[selectedUser - 1]);
-  // let userFilter = [];
-  // if (users[selectedUser - 1]?.poste === "gardien") {
-  //   userFilter = userNotes.filter(
-  //     (user) => user.note_plongeon || user.note_arrets || user.note_dega
-  //   );
-  // } else {
-  //   userFilter = userNotes.filter(
-  //     (user) =>
-  //       user.note_physique ||
-  //       user.note_vitesse ||
-  //       user.note_passe ||
-  //       user.note_tir ||
-  //       user.note_dribble ||
-  //       user.note_vista ||
-  //       user.note_cf ||
-  //       user.note_pied_faible ||
-  //       user.note_gen
-  //   );
-  // }
-  // console.info("userFilter", userFilter);
   return (
     <div className="flex flex-col text-center items-center lg:pt-10 w-full">
       <h2 className="text-2xl font-primary-font mb-4">Affichage des notes</h2>

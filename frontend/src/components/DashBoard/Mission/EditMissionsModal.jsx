@@ -29,7 +29,6 @@ export default function EditMissionsModal({
     }, 1000);
   };
 
-  console.info("missionData", missionData);
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -37,19 +36,13 @@ export default function EditMissionsModal({
       ...prevFormData,
       [name]: value,
     }));
-
-    console.info("formData", formData);
   };
 
   const updateMission = (updatedMission) => {
-    console.info("formData", formData);
-    console.info("updatedMission", updatedMission);
     const formDataToSend = new FormData();
     Object.entries(formData).forEach(([key, value]) => {
       formDataToSend.append(key, value);
     });
-    console.info("formDataToSend", formDataToSend);
-    console.info("updatedMission.id", updatedMission.id);
     fetch(
       `${import.meta.env.VITE_BACKEND_URL}/api/missions/${updatedMission.id}`,
       {
@@ -58,7 +51,6 @@ export default function EditMissionsModal({
           "Content-Type": "application/json",
           Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
         },
-        // body: formDataToSend,
         body: JSON.stringify({
           mission: updatedMission.mission,
           difficulty: updatedMission.difficulty,
@@ -87,7 +79,7 @@ export default function EditMissionsModal({
       onRequestClose();
     }, 1000);
   };
-  console.info("formData", formData);
+
   return (
     <Modal
       isOpen={isOpen}

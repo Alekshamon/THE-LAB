@@ -52,7 +52,6 @@ class discountManager extends AbstractManager {
       `UPDATE ${this.table} SET quantity = quantity - 1 WHERE id = ?`,
       [discount_id]
     );
-    console.info("add", add);
     return add;
   }
 

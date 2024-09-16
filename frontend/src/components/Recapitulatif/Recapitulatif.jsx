@@ -2,36 +2,65 @@
 /* eslint-disable react/prop-types */
 // eslint-disable-next-line react/prop-types
 
-export default function Recapitulatif({ selectedEvent, selectedFormula }) {
+/* eslint-disable react/prop-types */
+import React, { useState } from "react";
+import { IoCheckmarkDoneCircle } from "react-icons/io5";
+import { MdErrorOutline } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+
+export default function Recapitulatif({ selectedEvent }) {
+  const navigate = useNavigate();
   const { city, address, date } = selectedEvent || {};
-  const { price, title } = selectedFormula || {};
+  const [notification, setNotification] = useState({
+    message: "",
+    success: false,
+  });
+
+  const showNotification = (message, success) => {
+    setNotification({ message, success });
+    setTimeout(() => {
+      navigate("/copilot");
+      setNotification({ message: "", success: false });
+    }, 2000);
+  };
+
   const handleCheckout = async () => {
     try {
-      // Utilisez l'URL de l'environnement pour faire l'appel API
+      const token = localStorage.getItem("token");
+      if (!token) {
+        throw new Error("Token is missing");
+      }
+
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/create-checkout-session`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/stockEvent`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
           },
-          body: JSON.stringify({ price: selectedFormula.id }),
+          body: JSON.stringify({
+            event_id: selectedEvent?.id,
+          }),
         }
       );
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
 
-      const { url } = await response.json();
-      if (url) {
-        window.location.href = url;
+      if (response.ok) {
+        const data = await response.json();
+        console.info("Success:", data);
+        showNotification("Inscription réussie !", true);
       } else {
-        throw new Error("Invalid response from server");
+        const errorData = await response.json();
+        showNotification(
+          `Erreur : ${errorData.error || "Une erreur est survenue"}`,
+          false
+        );
       }
     } catch (error) {
-      console.error(
-        "Erreur lors de la création de la session de paiement:",
-        error
+      console.error("Erreur lors de l'inscription à l'événement:", error);
+      showNotification(
+        "Erreur lors de l'inscription. Vérifiez les informations et réessayez.",
+        false
       );
     }
   };
@@ -39,8 +68,8 @@ export default function Recapitulatif({ selectedEvent, selectedFormula }) {
   return (
     <>
       <div className="text-white border-2 border-red-600 my-8 flex flex-col p-4 items-start center">
-        <h1 className="self-center">Recapitulatif</h1>
-        <p>Vous avez choisi de participer a l'événement : {city}</p>
+        <h1 className="self-center">Récapitulatif</h1>
+        <p>Vous avez choisi de participer à l'événement : {city}</p>
         <p>Adresse du Stade : {address}</p>
         <p>
           Date de l'événement :{" "}
@@ -50,22 +79,28 @@ export default function Recapitulatif({ selectedEvent, selectedFormula }) {
             year: "numeric",
           })}
         </p>
-        <p>Formule Choisie : {title}</p>
-        <p>Prix : {price} €</p>
-        <div className="flex flex-row gap-2">
-          <p>Code Promo : </p> &nbsp;
-          <input type="text" className="rounded" />
-          <button className="bg-red-600 text-white rounded px-2">
-            Utiliser
-          </button>
-        </div>
       </div>
       <button
         onClick={handleCheckout}
         className="bg-red-600 text-white rounded px-2 mb-4"
       >
-        Passer Au Paiement
+        Confirmer l'inscription
       </button>
+
+      {notification.message && (
+        <div
+          className={`fixed bottom-4 right-4 px-5 py-2 rounded-lg flex items-center ${
+            notification.success ? "bg-green-500" : "bg-red-500"
+          } text-white text-sm`}
+        >
+          {notification.success ? (
+            <IoCheckmarkDoneCircle className="mr-2" />
+          ) : (
+            <MdErrorOutline className="mr-2" />
+          )}
+          {notification.message}
+        </div>
+      )}
     </>
   );
 }

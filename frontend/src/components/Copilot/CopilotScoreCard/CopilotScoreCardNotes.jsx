@@ -18,7 +18,6 @@ export default function CopilotScoreCardNotes() {
       .catch((err) => console.info(err));
   }, []);
 
-  // console.info("scoreCards", scoreCards[0].photo_user);
   return (
     <div className="flex flex-col items-center justify-center">
       {scoreCards[0] ? (

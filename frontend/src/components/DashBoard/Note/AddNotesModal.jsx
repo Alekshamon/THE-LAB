@@ -66,8 +66,6 @@ export default function AddEventModal({ isOpen, onRequestClose }) {
       });
   }, [selectedEvent, notification.message]);
 
-  console.info("notification", notification.message);
-  console.info("note", note);
   const handleNoteChange = (event) => {
     // Mise à jour de la note lors de la saisie dans le champ de texte
     const { value } = event.target;

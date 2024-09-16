@@ -7,17 +7,18 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const createCheckoutSession = async (req, res) => {
   try {
-    const { formulaId } = req.body;
+    const { id } = req.body;
 
-    if (!formulaId) {
-      return res.status(400).json({ error: "Le formulaId est requis" });
+    if (!id) {
+      return res.status(400).json({ error: "Le id est requis" });
     }
-    const [privilege] = await tables.privilege.getPrivilegeById(formulaId);
+
+    const [privilege] = await tables.privilege.read(id);
 
     if (!privilege || !privilege.stripe_price_id) {
       return res
         .status(400)
-        .json({ error: "Le priceId correspondant n'a pas été trouvé" });
+        .json({ error: "Le stripe_price_id correspondant n'a pas été trouvé" });
     }
 
     const session = await stripe.checkout.sessions.create({

@@ -20,7 +20,6 @@ export default function ForgotPassword() {
       body: JSON.stringify({ email }),
     })
       .then((res) => {
-        console.info("res", res);
         if (res.status === 200) {
           setRequestSuccess(true);
           return res.json().then((data) => {
@@ -41,7 +40,6 @@ export default function ForgotPassword() {
         return res.json();
       })
       .then((data) => {
-        console.info("data", data);
         setTimeout(() => {
           setErrorMessage(data.message);
           setLoading(false);
@@ -55,7 +53,6 @@ export default function ForgotPassword() {
           setLoading(false);
         }, 4000);
       });
-    console.info("email", email);
   };
 
   return (
